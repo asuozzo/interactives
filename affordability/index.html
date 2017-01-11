@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script type="text/javascript" src="http://d3js.org/d3.v3.js"></script>
+<style>
+
+#chart {
+  width: 100%;
+}
+
+text {
+  font-family: sans-serif;
+  font-size:15px;
+}
+
+.bar {
+  fill: #d3d3d3;
+}
+
+
+text.vermontlabel {
+  display: block;
+}
+text.vermontnum {
+  display: block;
+}
+
+.vermont {
+  fill:#663366;
+}
+
+.axis text {
+  font: 12px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+<h3>The Cost of Goods and Services in Vermont Is Near the National Average</h3>
+<i>(Hover or tap to see how costs in other states compare to the U.S. average.)</i>
+<div id="chart"></div>
+<i>Source: <a href="https://www.bea.gov/newsreleases/regional/rpp/rpp_newsrelease.htm">Bureau of Economic Analysis price parity data</a>, 2014</i>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 10, right: 35, bottom: 10, left: 35},
+    width = parseInt(d3.select("#chart").style("width"), 10),
+    width = width - margin.left - margin.right,
+    height = 800 - margin.top - margin.bottom,
+    percent = d3.format(".1%");
+
+var x = d3.scale.linear()
+          .range([0, width]);
+
+var y = d3.scale.ordinal()
+          .rangeRoundBands([0, height], 0.1);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("right")
+    .tickSize(0)
+    .tickPadding(6);
+
+var chart = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("affordall.csv", type, function(error, data) {
+
+  data.sort(function(a,b){
+    return b.plusminus2014-a.plusminus2014
+  })
+
+  x.domain(d3.extent(data, function(d) { return d.plusminus2014; })).nice();
+  y.domain(data.map(function(d) { return d.state; }));
+
+
+  var stateGroup = chart.selectAll("g")
+      .data(data)
+      .enter().append("g")
+      .attr("class", function(d){
+        return "state " + d.state
+      })
+
+  stateGroup.append("rect")
+      .attr("class", function(d){
+        if (d.state === "Vermont"){
+          return "bar vermont"
+        } else {
+          return "bar"
+        }
+      })
+      .attr("x", function(d) {
+        return x(Math.min(0, d.plusminus2014));
+      })
+      .attr("y", function(d) { return y(d.state); })
+      .attr("width", function(d) {
+            return Math.abs(x(0) - x(d.plusminus2014))
+      })
+      .attr("height", y.rangeBand())
+
+    stateGroup.append("text")
+        .attr("class", function(d){
+          if (d.state === "Vermont"){
+            return "label vermontlabel"
+          } else {
+            return "label"
+          }
+        })
+        .attr("x", -3000)
+        .attr("y", function(d,i) {
+            return y(d.state) + 12;
+        })
+        .text(function(d) {
+            return d.state;
+       })
+        .each(function(d) {
+        d.labelwidth = this.getBBox().width;
+        })
+        .attr("display","none")
+        .attr("x", function(d){
+            if (d.plusminus2014 > 0){
+              return x(-0.2) - d.labelwidth;
+            } else {
+              return x(0.2)
+            }
+        });
+
+    stateGroup.append("text")
+      .attr("class", function(d){
+        if (d.state === "Vermont"){
+          return "num vermontnum"
+        } else {
+          return "num"
+        }
+      })
+      .attr("x",-3000)
+      .attr("y", function(d,i) {
+        return y(d.state) + 12;
+      })
+      .text(function(d){
+        return percent(d.plusminus2014/100.0)
+      })
+      .each(function(d) {
+        d.numwidth = this.getBBox().width;
+      })
+      .attr("display","none")
+      .attr("x", function(d){
+          if (d.plusminus2014 > 0) {
+            return x(d.plusminus2014) + 2;
+          } else {
+            return x(d.plusminus2014) - d.numwidth - 2;
+      }});
+
+// capture all mouseover events at a state's y position
+
+    var fullrect = stateGroup.append("rect")
+      .attr("class","hoverrect")
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all')
+      .attr("width", width)
+      .attr("y", function(d) { return y(d.state); })
+      .attr("height", y.rangeBand())
+      .on("mouseover", hoverState)
+      .on("mouseout", unhoverState)
+
+// Make responsive (thanks, eyeseast, for the handy primer http://eyeseast.github.io/visible-data/2013/08/28/responsive-charts-with-d3/)
+
+d3.select(window).on("resize", resize);
+
+
+
+});
+
+function type(d) {
+  d.plusminus2014 = +d.plusminus2014;
+  return d;
+}
+
+function hoverState(d) {
+ if (d.state != "Vermont") {
+          d3.select(this.parentNode).select(".bar").style("fill", "#a0a627")
+          d3.select(this.parentNode).select(".label").style("display", "block")
+          d3.select(this.parentNode).select(".num").style("display", "block");
+        } else {
+          d3.select(this.parentNode.firstChild).style("opacity", 0.8)
+        }
+}
+
+function unhoverState(d) {
+    if (d.state != "Vermont") {
+          d3.select(this.parentNode).select(".bar").style("fill", "#d3d3d3")
+          d3.select(this.parentNode).select(".label").style("display", "none")
+          d3.select(this.parentNode).select(".num").style("display", "none");
+        } else {
+          d3.select(this.parentNode.firstChild).style("opacity", 1)
+        }
+}
+
+function resize() {
+  width = parseInt(d3.select("#chart").style("width"),10);
+  width = width - margin.left - margin.right;
+
+  x.range([0, width]);
+  d3.select(chart.node().parentNode)
+    .style("width", (width + margin.left + margin.right) + "px")
+
+  chart.selectAll("rect.bar")
+      .attr("x", function(d) {
+        return x(Math.min(0, d.plusminus2014));
+      })
+      .attr("width", function(d) {
+            return Math.abs(x(0) - x(d.plusminus2014))
+      })
+
+  chart.selectAll("rect.hoverrect")
+    .attr("width", "100%")
+
+  chart.selectAll(".label")
+    .attr("x", function(d){
+            if (d.plusminus2014 > 0){
+              return x(-0.2) - d.labelwidth;
+            } else {
+              return x(0.2)
+            }
+        });
+
+  chart.selectAll(".num")
+    .attr("x", function(d){
+          if (d.plusminus2014 > 0) {
+            return x(d.plusminus2014) + 5;
+          } else {
+            return x(d.plusminus2014) - d.numwidth - 2;
+          }})
+};
+
+</script>
