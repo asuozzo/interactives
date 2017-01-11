@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+	<link rel="stylesheet" href="vtOverdoses.css" type="text/css" charset="utf-8">
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script src = "https://code.jquery.com/jquery-3.1.0.min.js">
+
+	</script>
+</head>
+
+<body>
+
+<h3>How many people died of <span class="dropdown">
+	<span id="opioidtype">all types of opioid</span>
+	<select id="opioid-list">
+  <option value="allopioid">all types of opioid</option>
+  <option value="rxopioid">prescription opioid</option>
+  <option value="heroin">heroin</option>
+	<option value="fentanyl">fentanyl</option>
+</select></span>
+	overdoses in Vermont between 2010 and 2015?</h3>
+<div id="chart"></div>
+<p class= "smallSans">Some overdoses fall into multiple categories, so totals in each category don't necessarily add up to the overall totals. Numbers include accidental and undetermined causes of death, but exclude suicides. Source: <a href="http://healthvermont.gov/adap/treatment/opioids/">Vermont Department of Health</a></p>
+
+
+
+<script type="text/javascript" src="vtOverdoses.js"></script>
+
+</body>

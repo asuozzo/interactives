@@ -1,0 +1,60 @@
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+h3 {
+  font-family: georgia, "times new roman", times, serif;
+  font-size:1.5em;
+}
+
+a {
+  color:#A0A62B;
+  text-decoration: none;
+  
+}
+
+.smallSans {
+  font-family: helvetica, arial, sans-serif;
+  font-size:90%;
+}
+
+.dropdown {
+  color:#a0a627;
+  position: relative;
+  display:inline-block;
+}
+
+.dropdown:after{
+    content: '▾';
+	   color:#a0a627;
+    margin-left: 1px;
+    }
+
+select {
+  margin: 2px;
+  border: none;
+  background: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position:absolute;
+  opacity:0;
+  width: 100%;
+  left:0;
+  font-size: 1em;
+}
+
+.opioidtype {
+  color:
+}
+
+.labeltext {
+  font-family: sans-serif;
+  font-size: .8em;
+}
