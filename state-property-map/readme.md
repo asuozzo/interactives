@@ -3,7 +3,9 @@ A cluster map of property owned by the state of Vermont, with information on how
 To run this project locally, create a Google Maps Javascript API key and paste it into index.html to replace `[API KEY]`.
 
 Data source: Vermont Department of Buildings and General Services
+
 Building icon source: The Noun Project
+
 Cluster icon source: Google
 
 Screenshot:
