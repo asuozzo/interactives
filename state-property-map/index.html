@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="markercluster.js" charset="utf-8"></script>
+<link rel="stylesheet" href="style.css">
+<script src="markers.js" charset="utf-8"></script>
+<script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+
+<div id="mapContainer"><h4>Which Buildings Does Vermont Own?</h4>
+<p class="smallSans"><i>Click a building cluster to zoom in. Select a building to see more information about its size and use.</i></p>
+<div id="mapCanvas">
+      <div id="filter">
+    <form id="mapFilter" action="">
+      <input type="radio" name="filter" value="All" checked="checked"> All state-owned buildings<br>
+      <input type="radio" name="filter" value="Vacancies"> Builings with vacant space<br>
+      <input type="radio" name="filter" value="Unusable"> Buildings with unusable space<br>
+    </form>
+  </div>
+    <div id="map">
+    </div>
+</div>
+<small>Source: <a href="http://www.bgs.vermont.gov/">Vermont Department of Buildings and General Services</a>; Building icon: <a href="https://thenounproject.com/">The Noun Project</a>;  Map: Andrea Suozzo
+ </small>
+</div>
+
+
+  <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=[API KEY]&callback=initialize"></script>
+
+</body>
+</html>

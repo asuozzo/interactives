@@ -1,0 +1,60 @@
+#map {
+height: 550px;
+width: 100%;
+}
+#mapCanvas {
+    width: 100%;
+    position:relative;
+}
+.infowindow {
+  font-family: sans-serif;
+  width: 250px;
+  overflow: auto;
+}
+
+.infowindow .title {
+  font-family:"sentinel a", "sentinel b";
+  color:#a0a627;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: .5em;
+  margin-bottom: 0em;
+  line-height: 100%;
+  padding-bottom: 0em;
+}
+
+.infowindow .subhed {
+  color: grey;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 5px;
+  line-height: 110%;
+  margin-bottom: 5px;
+  padding-top: 0em;
+  display: block;
+}
+.infowindow .space {
+  font-size:1.2em;
+  font-family: sans-serif;
+  line-height: 1.2em;
+  display: block;
+  padding-top:5px;
+}
+.infowindow .agencies{
+  font-size:1.2em;
+  font-family: sans-serif;
+  line-height: 1.2em;
+  display: block;
+  padding-top: 5px;
+}
+
+#filter {
+  background-color: white;
+  position:absolute;
+  padding:10px;
+  bottom: 25px;
+  left:15px;
+  z-index: 50;
+  font-family: sans-serif;
+  font-size: .8em;
+}
