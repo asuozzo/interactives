@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mayor Thom Lauzon's Barre City Properties</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="https://use.typekit.net/jws1erf.js"></script>
+    <script src="js/pym.min.js"></script>
+    <script src="js/data.js"></script>
+</head>
+<body>
+    <div id="map-container">
+      <div class="infobox-wrapper">
+        <div id="infobox">
+            <span class="info-start">Pick a property to see more information.</span>
+            <br>
+            <br>
+        </div>
+        <div class="forward"><img src="img/fwd.png" class="arrow forwardarrow"></div>
+        <div class="back"><img src="img/back.png" class="arrow backarrow"></div>
+        </div>
+      <div id="map"></div>
+      </div>
+    <script type="text/javascript">
+        try{Typekit.load({ async: true });}catch(e){}
+
+        var markers = []
+
+        var map,
+            loc,
+            currentMarker;
+
+        function initMap() {
+            loc = new google.maps.LatLng(44.198723, -72.503223);
+
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: loc,
+              mapTypeControl: false,
+              gestureHandling: 'cooperative',
+              zoom: 14,
+              fullscreenControl: false
+            });
+
+            for (var i=0; i<locations.length; i++){
+
+                var marker = new google.maps.Marker({
+                  map: map,
+                  position: {lat:locations[i].lat,lng:locations[i].long},
+                  propertytype: locations[i].description,
+                  acres:locations[i].acres,
+                  value:locations[i].value,
+                  title:locations[i].address,
+                  owner:locations[i].owner,
+                  icon:"img/greenhouse.png",
+                  animation: google.maps.Animation.DROP,
+                  id: i
+                });
+
+                markers.push(marker);
+
+                marker.addListener("click", function(){
+                    setInfoBox(this);
+                });
+            }
+
+            jQuery("img.forwardarrow").on("click",function(){
+              if (!currentMarker){
+                setInfoBox(markers[0])
+              } else {
+                for (i=0;i<markers.length;i++){
+                  if (currentMarker.title === markers[i].title){
+                    if (i<markers.length-1){
+                      setInfoBox(markers[i+1]);
+                    } else {
+                      setInfoBox(markers[0])
+                    }
+                    break;
+                  }
+                }
+              }
+            });
+
+            jQuery("img.backarrow").on("click",function(){
+              if (!currentMarker){
+                setInfoBox(markers[markers.length-1])
+              } else {
+                for (i=0;i<markers.length;i++){
+                  if (currentMarker.title === markers[i].title){
+                    if (i<1){
+                      setInfoBox(markers[markers.length-1]);
+                    } else {
+                      setInfoBox(markers[i-1])
+                    }
+                    break;
+                  }
+                }
+              }
+            });
+
+         }
+
+        function setInfoBox(marker){
+          map.panTo(offsetCenter(marker.position))
+          map.setZoom(15)
+          currentMarker=marker;
+
+          for (var i=0;i<markers.length;i++){
+            markers[i].setIcon('img/greenhouse.png')
+          }
+
+          marker.setIcon('img/redhouse.png')
+
+          updateDiv = document.getElementById("infobox");
+          showDiv = document.getElementsByClassName("infobox-wrapper")[0];
+
+          var content = '<div id="info-header" class="info-detail"><span class="info-pre">Lauzon Properties</span><br>' + marker.title + '</div>';
+          content += '<div id="info-value" class="info-detail"><span class="label label-value">Value</span>: $' + marker.value.toLocaleString() + '</div>';
+          content += '<div id="info-type" class="info-detail"><span class="label label-type">Property Type</span>: ' + marker.propertytype + '</div>';
+          content += '<div id="info-owner" class="info-detail"><span class="label label-owner">Owner</span>: ' + marker.owner + '</div>';
+          content += '<div id="info-size" class="info-detail"><span class="label label-size">Size</span>: ' + marker.acres + ' Acres</div>';
+
+
+          updateDiv.innerHTML = content
+          showDiv.style.display = "block"
+
+        }
+
+        function offsetCenter( latlng ) {
+                    var scale = Math.pow(2, map.getZoom());
+                    var offsetx = -30;
+                    var offsety = -30;
+                    var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0);
+                    var point = map.getProjection().fromLatLngToPoint(latlng);
+                    var newPoint = new google.maps.Point(
+                      point.x - pixelOffset.x,
+                      point.y + pixelOffset.y
+                  );
+                    var newCenter = map.getProjection().fromPointToLatLng(newPoint);
+                    return newCenter;
+            }
+
+        new pym.Child();
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=[API-KEY]&callback=initMap"
+    async defer></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+h1 {
+
+}
+
+#map-container {
+    position:relative;
+    height: 500px;
+    width: 100%;
+    max-width: 680px;
+}
+
+#map {
+    height: 500px;
+    width: 100%;
+    position: absolute;
+
+}
+
+.infobox-wrapper {
+    display:block;
+    position:absolute;
+    width: 300px;
+    top:5px;
+    right:10px;
+    z-index:1;
+}
+#infobox {
+    margin: 8px;
+    background:white;
+    color:#000;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    padding: 1em 1em;
+    border:1px solid black;
+}
+
+#infobox > div {
+    padding: 3px;
+}
+
+.info-detail {
+    font-family: "josefin",sans-serif;
+}
+
+.label {
+    font-weight: bold;
+}
+
+#info-header {
+    padding:10px;
+    margin-bottom: 5px;
+    background:#F8F218;
+    font-size: 1.5em;
+    border:2px solid black;
+    font-weight: bold;
+    text-align: center;
+    font-family: "copperplate";
+    text-transform: uppercase;
+}
+
+.info-pre {
+    font-size: .6em;
+}
+
+.arrow {
+    width: 50px;
+    height: 50px;
+}
+.forward {
+    position:absolute;
+    width:50px;
+    right:0;
+    top:50%;
+    transform: translate(20px,-20px);
+}
+
+.back {
+    position:absolute;
+    width: 50px;
+    left:0;
+    top:50%;
+    transform: translate(-20px,-20px);
+}
+
+@media only screen and (max-width: 600px) {
+    .infobox-wrapper {
+        position:relative;
+        margin:auto;
+    }
+    #map {
+        position: relative;
+        height:200px;
+    }
+}

@@ -6,3 +6,4 @@
 | [Vermont affordability](affordability) | D3 | Jan. 11, 2017 |
 | [State-owned properties](state-property-map) | Google Maps API, JavaScript | June 7, 2017 |
 | [BTV Bike Lanes](bike-lanes) | Google Maps API, JavaScript | Aug. 2, 2017 |
+| [Lauzon Monopoly Map](lauzon-map) | Google Maps API, JavaScript | Sept. 6, 2017 |
