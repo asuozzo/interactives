@@ -8,5 +8,5 @@
 | [State-owned properties](state-property-map) | Google Maps API | June 7, 2017 |
 | [BTV Bike Lanes](bike-lanes) | Google Maps API | Aug. 2, 2017 |
 | [Lauzon Monopoly Map](lauzon-map) | Google Maps API | Sept. 6, 2017 |
-| [Waterfront Updates](waterfront-scroll) | Google Maps API | June 6, 2018 |
+| [Waterfront Updates](https://github.com/asuozzo/map-scroll) | Mapbox, Scrollstory | June 6, 2018 |
 | [Vermont Town Birth and Death Rates](birth-death-map) | D3 | Dec. 5, 2018 |
